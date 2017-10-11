@@ -39,8 +39,10 @@ def flash_msg():
 #    return render_template('form.html',form=form,name=name)
 
 class NameForm(Form):
-    name = StringField('your name:',validators=[Required()])
+    name = StringField('your message:',validators=[Required()])
+    to = StringField('recipients:',validators=[Required()])
     submit = SubmitField('Submit')
+	
 	
 if __name__ == '__main__':
     app.run(debug=True)
