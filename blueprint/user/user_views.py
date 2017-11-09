@@ -1,4 +1,4 @@
-from user import user
+from . import user
 
 @user.route('/lucy')
 def user_lucy():
