@@ -1,4 +1,4 @@
-from . import admin
+from admin import admin
 
 @admin.route('/jerry')
 def admin_jerry():
