@@ -1,3 +1,4 @@
+#encoding=utf-8
 from flask import Flask, render_template 
 from flask.ext.bootstrap import Bootstrap 
 from flask.ext.mail import Mail 
@@ -21,7 +22,7 @@ def create_app(config_name):
     moment.init_app(app) 
     db.init_app(app)
     # 附加路由和自定义的错误页面
-    from .main import main as main_blueprint
+    from main import main as main_blueprint
     #蓝本在程序工厂函数中注册到程序上
     app.register_blueprint(main_blueprint)
     

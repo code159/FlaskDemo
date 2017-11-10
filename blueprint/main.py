@@ -1,6 +1,6 @@
 from flask import Flask
-from admin.admin_views import admin as admin_bp
-from user.user_views import user as user_bp
+from admin import admin as admin_bp
+from user import user as user_bp
 
 app=Flask(__name__)
 app.register_blueprint(admin_bp,url_prefix='/admin')

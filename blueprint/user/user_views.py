@@ -1,8 +1,8 @@
 from . import user
 
-@user.route('/lucy')
+@user.route('/lucy/')
 def user_lucy():
     return 'user lucy'
-@user.route('/tom')
+@user.route('/tom/')
 def user_tom():
     return 'user tom'
