@@ -12,12 +12,14 @@ app = Flask(__name__)
 
 app.config['SECRET_KEY']='password'
 
+app.config['SQLALCHEMY_DATABASE_URI']='sqlite:///'+os.path.join(os.path.abspath(__file__),'data.sqlite')
 app.config['SQLALCHEMY_DATABASE_URI']='mysql://root:mysql3306@localhost/flask'
 app.config['SQLALCHEMY_COMMIT_ON_TEARDOWN']=True
 
 app.config['MAIL_SERVER'] = 'smtp.qq.com'
 app.config['MAIL_PORT'] = 587
 app.config['MAIL_USE_TLS'] = True
+#需要首先在当前环境中配置MAIL_USERNAME、MAIL_PASSWORD
 app.config['MAIL_USERNAME'] = os.environ.get('MAIL_USERNAME')
 app.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASSWORD')
 app.config['FLASKY_MAIL_SUBJECT_PREFIX'] = '[Flasky]'
@@ -85,6 +87,8 @@ def insert_role(name):
     return '<h1>insert '+role.name+' successfully</h1>'
 
 if __name__ == '__main__':
+    print os.path.abspath(os.path.dirname(__file__))
+    print os.environ.get('MAIL_USERNAME')
     app.debug = True
 #    app.run()
     app.run()
