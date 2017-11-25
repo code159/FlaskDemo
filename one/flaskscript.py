@@ -4,7 +4,7 @@ from flask_script import Manager,Command,Option
 app = Flask(__name__)
 manager = Manager(app)
 
-#一、使用装饰器
+#一、使用装饰器（简单）
 #使用@manager.command创建扩展命令，函数名hello会作为flask-script的一个扩展命令
 @manager.command
 def hello():
