@@ -8,6 +8,8 @@ manager = Manager(app)
 #使用@manager.command创建扩展命令，函数名hello会作为flask-script的一个扩展命令
 @manager.command
 def hello():
+    #帮助信息
+    """Run hello"""
     print 'this is a hello command using @manager.command'
 #使用@manager.option
 @manager.option('--name','-n',dest='name',default='liyubin')
