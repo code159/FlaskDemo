@@ -4,10 +4,12 @@ from flask_bootstrap import Bootstrap
 from flask_sqlalchemy import SQLAlchemy 
 from config import config
 from flask_login import LoginManager
+from flask_mail import Mail
 
 bootstrap = Bootstrap() 
 db = SQLAlchemy()
 login_manager = LoginManager()
+mail = Mail()
 #提供不同的安全等级防止用户会话遭篡改。 设为 'strong' 时， Flask-Login 会记录客户端 IP地址和浏览器的用户代理信息， 如果发现异动就登出用户。 
 login_manager.session_protection='strong'
 #login_view设置登陆页面的端口
@@ -22,6 +24,7 @@ def create_app(config_name):
     bootstrap.init_app(app) 
     db.init_app(app)
     login_manager.init_app(app)
+    main.init_app(app)
     # 附加路由和自定义的错误页面
     from .main import main as main_blueprint
     from .auth import auth as auth_blueprint
