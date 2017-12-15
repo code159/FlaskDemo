@@ -1,3 +1,4 @@
+#encoding=utf-8
 from flask_mail import Message
 from threading import Thread
 from . import mail

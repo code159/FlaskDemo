@@ -24,7 +24,7 @@ def create_app(config_name):
     bootstrap.init_app(app) 
     db.init_app(app)
     login_manager.init_app(app)
-    main.init_app(app)
+    mail.init_app(app)
     # 附加路由和自定义的错误页面
     from .main import main as main_blueprint
     from .auth import auth as auth_blueprint
