@@ -1,7 +1,7 @@
 #encoding=utf-8
 from flask_sqlalchemy import SQLAlchemy
 from . import db
-from werkzeug import generate_password_hash,check_password_hash
+from werkzeug.security import generate_password_hash,check_password_hash
 from flask_login import UserMixin,AnonymousUserMixin
 from . import login_manager
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer

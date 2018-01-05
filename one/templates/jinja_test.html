@@ -1,0 +1,64 @@
+{# 导入宏 #}
+{% import '_macros.html' as m %}
+
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+    {# 模板渲染 #}
+    {# e是自动转义，防止渲染如<p>之类的 #}
+    <h2>Hello {{ name|e }}</h2>
+
+    {# set全局变量 #}
+    {% set a=42 %}
+    {{ a }}
+    {# with局部变量 #}
+    {% with a=50 %}
+    {{ a }}
+    {% endwith %}
+    {{ a }}
+
+    <h2>控制结构</h2>
+    <h3>if</h3>
+    {% if lists[0]==0 %}lists[0] is 0
+    {% elif lists[0]==1 %}lists[0] is 1
+    {% else %}lists[0] is not 0 or 2
+    {% endif %}
+    <h3>for</h3>
+    <ul>
+        {% for element in lists %}
+        <li>{{ loop.index0 }}: {{ element }}</li>
+        {% else %}
+        <li>no one</li>
+        {% endfor %}
+    </ul>
+
+    <h2>运算符</h2>
+    <p>"hello "~"world": {{ "hello "~"world" }}</p>
+    <p>1+2</p>
+
+    <h2>宏</h2>
+    {% macro input(name, value='', type='text') %}
+        <input type="{{ type }}" name="{{ name }}" value="{{ value|e }}">
+    {% endmacro %}
+    <p>{{ input('username', value='123') }}</p>
+    <p>{{ input('password', type='password') }}</p>
+    <p>{{ m.render_comment('hello') }}</p>
+    <p>{{ m.input('hello','hello from macro') }}</p>
+
+    <h2>测试器</h2>
+    {% if name is upper%}
+    value of variable: {{ name }}
+    {% else %}
+    name is not upper
+    {% endif %}
+
+    <h2>include将一个模板的代码复制到此处</h2>
+    {% include '_footer.html' %}
+
+
+</body>
+</html>

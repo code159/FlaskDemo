@@ -1,0 +1,7 @@
+{% macro render_comment(comment) %}
+    <li>{{ comment }} --- from macro</li>
+{% endmacro %}
+
+{% macro input(name, value='', type='text') %}
+    <input type="{{ type }}" name="{{ name }}" value="{{ value|e }}">
+{% endmacro %}
