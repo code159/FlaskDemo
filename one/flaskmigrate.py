@@ -11,7 +11,7 @@ python flaskmigrate.py db downgrade
 '''
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-from flask_script import Manager
+from flask_script import Manager, Shell
 from flask_migrate import Migrate,MigrateCommand
 import os
 
@@ -54,6 +54,11 @@ user_role = Role(name='User')
 user_john = User(username='john', role=admin_role) 
 user_susan = User(username='susan', role=user_role)
 user_david = User(username='david', role=user_role)
+
+#shell下可操作变量
+def make_shell_context():
+    return dict(app=app, db=db, User=User, Role=Role)
+manager.add_command("shell", Shell(make_context=make_shell_context))
 
 if __name__ == '__main__':
     #app.run()
