@@ -9,15 +9,14 @@ python flaskmigrate.py db upgrade
 #取消更新
 python flaskmigrate.py db downgrade
 '''
-from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_script import Manager, Shell
 from flask_migrate import Migrate,MigrateCommand
+from flask import Flask
 import os
 
 basedir=os.path.abspath(os.path.dirname(__file__))
-
-app=Flask(__name__)
+app = Flask(__name__)
 
 #sqlite
 app.config['SQLALCHEMY_DATABASE_URI']='sqlite:///'+os.path.join(basedir,'data.sqlite')
@@ -25,6 +24,7 @@ app.config['SQLALCHEMY_DATABASE_URI']='sqlite:///'+os.path.join(basedir,'data.sq
 app.config['SQLALCHEMY_DATABASE_URI']='mysql://root:mysql3306@localhost/flask'
 app.config['SQLALCHEMY_COMMIT_ON_TEARDOWN']=True
 
+#db=SQLAlchemy(app)
 db=SQLAlchemy(app)
 
 #flask-migrate可在不用删除数据的情况下修改表结构，可回滚修改。
