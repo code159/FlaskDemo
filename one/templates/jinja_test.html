@@ -1,4 +1,5 @@
 {# 导入宏 #}
+{% extends "bootstrap/base.html" %}
 {% import '_macros.html' as m %}
 
 <!DOCTYPE html>
@@ -7,7 +8,7 @@
     <meta charset="UTF-8">
     <title></title>
 </head>
-<body>
+{% block body %}
     {# 模板渲染 #}
     {# e是自动转义，防止渲染如<p>之类的 #}
     <h2>Hello {{ name|e }}</h2>
@@ -58,7 +59,16 @@
 
     <h2>include将一个模板的代码复制到此处</h2>
     {% include '_footer.html' %}
+    {# bootstrap栅格系统 #}
+    <div class="container">
+        <div class="col-md-6">列宽6</div>
+        <div class="col-md-6">列宽6</div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">列宽4</div>
+        <div class="col-md-6">列宽6</div>
+        <div class="col-md-2">列宽2</div>
+    </div>
 
-
-</body>
+{% endblock %}
 </html>
