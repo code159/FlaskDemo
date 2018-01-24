@@ -2,12 +2,10 @@
 {% extends "bootstrap/base.html" %}
 {% import '_macros.html' as m %}
 
-<!DOCTYPE html>
-<html>
-<head lang="en">
-    <meta charset="UTF-8">
-    <title></title>
-</head>
+{% block title %}
+    jinja_test
+{% endblock %}
+
 {% block body %}
     {# 模板渲染 #}
     {# e是自动转义，防止渲染如<p>之类的 #}
@@ -51,7 +49,7 @@
     <p>{{ m.input('hello','hello from macro') }}</p>
 
     <h2>测试器</h2>
-    {% if name is upper%}
+    {% if name is upper %}
     value of variable: {{ name }}
     {% else %}
     name is not upper
@@ -71,4 +69,3 @@
     </div>
 
 {% endblock %}
-</html>

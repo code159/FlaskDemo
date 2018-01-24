@@ -7,13 +7,13 @@ import os
 
 app = Flask(__name__)
 basedir=os.path.abspath(os.path.dirname(__file__))
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:mysql3306@localhost/test'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:mysql3306@localhost/test2'
 app.config['SQLALCHEMY_COMMIT_ON_TEARDWON'] = True
 db = SQLAlchemy(app)
 manager = Manager(app)
 
 def make_shell_context():
-    return dict(app=app, db=db, Student=Student, Class=Class)
+    return dict(app=app, db=db, Student=Student, Class=Class, Follow=Follow, User=User)
 manager.add_command('shell', Shell(make_context=make_shell_context))
 
 '''
@@ -28,14 +28,14 @@ class Student(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50), unique=True)
     classes = db.relationship('Class', secondary=registrations, backref='students')
-    def __init__(self,id,name):
-        self.id=id
-        self.name=name
+    def __init__(self, id, name):
+        self.id = id
+        self.name = name
 class Class(db.Model):
     __tablename__ = 'classes'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50), unique=True)
-    def __init__(self,id,name):
+    def __init__(self, id, name):
         self.id=id
         self.name=name
 
@@ -56,10 +56,27 @@ class User(db.Model):
                                backref=db.backref('follower', lazy='joined'),
                                lazy='dynamic',
                                cascade='all, delete-orphan')
-    followers = db.relationship('Follow',foreign_keys=[Follow.followed_id],
+    followers = db.relationship('Follow',
+                                foreign_keys=[Follow.followed_id],
                                 backref=db.backref('followed', lazy='joined'),
                                 lazy='dynamic',
                                 cascade='all, delete-orphan')
+    def follow(self, user):
+        if not self.is_following(user):
+            f = Follow(follower=self, followed=user)
+            db.session.add(f)
+
+    def unfollow(self, user):
+        f = self.followed.filter_by(followed_id=user.id).first()
+        if f:
+            db.session.delete(f)
+    def is_following(self, user):
+        return self.followed.filter_by(
+            followed_id=user.id).first() is not None
+
+    def is_followed_by(self, user):
+        return self.followers.filter_by(
+            follower_id=user.id).first() is not None
 
 @app.route('/create')
 def create():
@@ -77,6 +94,8 @@ def insert():
     c.students.append(s)
 
     db.session.commit()
+
+    return '<h1>insert successfully!</h1>'
 
 @app.route('/drop')
 def drop():
