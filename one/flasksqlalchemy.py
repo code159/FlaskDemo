@@ -5,6 +5,9 @@
 
 from flaskmigrate import app,db, admin_role, mod_role, user_role, user_john, user_susan, user_david, User, Role, Post
 from flask import request,render_template
+from flask_bootstrap import Bootstrap
+
+bootstrap = Bootstrap(app)
 
 #注意在改删数据时，对象要从数据库里查出数据后重建
 @app.route('/create')

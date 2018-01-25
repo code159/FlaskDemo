@@ -1,3 +1,16 @@
+<!--
+<head>
+	<meta charset="utf-8">
+	<title>Bootstrap 实例 - 默认的分页</title>
+	<link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+	<script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+-->
+{% extends "bootstrap/base.html" %}
+
+{% block body %}
+
 {# 文章 #}
 <div class="post-tabs">
     {% for post in posts %}
@@ -6,8 +19,8 @@
 </div>
 {# 分页 #}
 {% if pagination %}
-<div class="pagination">
 <ul class="pagination">
+    {# 向前一页 #}
     <li{% if not pagination.has_prev %} class="disabled"{% endif %}>
         <a href="{% if pagination.has_prev %}{{ url_for(endpoint, page=pagination.prev_num) }}{% else %}#{% endif %}">
             {# << #}
@@ -27,9 +40,12 @@
             {% endif %}
         {% else %}
             {# … #}
-            <li class="disabled"><a href="#">&hellip;</a></li>
+            <li class="disabled">
+                <a href="#">&hellip;</a>
+            </li>
         {% endif %}
     {% endfor %}
+    {# 向后一页 #}
     <li{% if not pagination.has_next %} class="disabled"{% endif %}>
         <a href="{% if pagination.has_next %}{{ url_for(endpoint, page=pagination.next_num) }}{% else %}#{% endif %}">
             {# >> #}
@@ -37,5 +53,6 @@
         </a>
     </li>
 </ul>
-</div>
 {% endif %}
+
+{% endblock %}
