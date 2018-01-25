@@ -4,6 +4,7 @@
     forgery括了地理位置、日期、网络、名称等大量虚拟生成算法
 '''
 import forgery_py
+from random import randint
 
 # 地理信息(城市)
 print forgery_py.address.city()
@@ -18,4 +19,4 @@ print forgery_py.name.full_name()
 # 公司
 print forgery_py.name.company_name()
 # 简介
-print forgery_py.lorem_ipsum.sentence()
+print forgery_py.lorem_ipsum.sentences(randint(1, 2))

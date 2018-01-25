@@ -68,6 +68,28 @@ class Post(db.Model):
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     author_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
+    #生成虚拟数据
+    @staticmethod
+    def generate_fake(count=100):
+        from random import seed,randint
+        import forgery_py
+        from sqlalchemy.exc import IntegrityError
+
+        user_count = User.query.count()
+        seed()
+        for i in range(count):
+            user = User.query.offset(randint(0,user_count-1)).first()
+            p = Post(body = forgery_py.lorem_ipsum.sentences(randint(1,3)),
+                     timestamp = forgery_py.date.date(True),
+                     author_id = user.id
+                     )
+            db.session.add(p)
+        try:
+            db.session.commit()
+        except IntegrityError:
+            db.session.rollback()
+
+
 class Follow(db.Model):
     __tablename__ = 'follows'
     follower_id = db.Column(db.Integer, db.ForeignKey('users.id'),

@@ -1,3 +1,4 @@
+#encoding=utf-8
 from flask import Flask,url_for,request
 app = Flask(__name__)
 
@@ -30,7 +31,11 @@ def req_context():
     req_ctx.push()
     user_agent=request.headers.get('Host')
     return '<h2>Your brower is %s</h2>' % user_agent
-	
+#显示请求中的参数值
+@app.route('/request')
+def request():
+    return request.args.get('id')
+
 @app.route('/req')
 def req():
     return '<h1>Bad Request!</h1>',400

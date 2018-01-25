@@ -3,8 +3,8 @@
 #from flaskmigrate import Role,User
 
 
-from flaskmigrate import app,db, admin_role, mod_role, user_role, user_john, user_susan, user_david, User, Role
-
+from flaskmigrate import app,db, admin_role, mod_role, user_role, user_john, user_susan, user_david, User, Role, Post
+from flask import request,render_template
 
 #注意在改删数据时，对象要从数据库里查出数据后重建
 @app.route('/create')
@@ -71,6 +71,30 @@ def query_filter(rolename):
         out=out+'<li>'+str(result.username)+'</li>\n'
     out=out+'</ul>\n'
     return out
+#显示所有文章
+@app.route('/posts')
+def posts():
+    posts = Post.query.all()
+    print Post.query.count()
+    text=''
+    for post in posts:
+        print str(post)
+        text=text+'<p>'+str(post.id)+'---'+str(post.body)+'</p>'
+    return text
+#分页显示文章
+@app.route('/paginate')
+def paginate():
+    page = request.args.get('page', 1, type=int)
+    pagination = Post.query.order_by(Post.timestamp.desc()).paginate(
+        page=page, per_page=3,error_out=False
+    )
+    posts = pagination.items
+    print '查询返回的总数:'+str(pagination.total)
+    print posts
+    for post in posts:
+        print post.body
+    return render_template('pagination.html', pagination=pagination, posts=posts, endpoint='.paginate')
+    #return '1'
 
 if __name__ == '__main__':
     app.debug=True
